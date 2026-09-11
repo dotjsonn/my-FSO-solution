@@ -8,6 +8,8 @@ import Message from './components/Message'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 
+import Togglable from './components/Togglable'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
@@ -79,8 +81,9 @@ const App = () => {
 
   const blogForm = () => (
     <div>
-      <h2>create new</h2>
-      <BlogForm createBlog={handleBlogForm} />
+      <Togglable labelName='create new blog'>
+        <BlogForm createBlog={handleBlogForm} />
+      </Togglable>
     </div>
   )
 
