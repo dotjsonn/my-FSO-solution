@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -18,6 +18,8 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -59,6 +61,7 @@ const App = () => {
   }
 
   const handleBlogForm = async (blogObject) => {
+    blogFormRef.current.changeVisibility()
     const blog = await blogService.create(blogObject)
     setBlogs(blogs.concat(blog))
     setColor('green')
@@ -81,7 +84,7 @@ const App = () => {
 
   const blogForm = () => (
     <div>
-      <Togglable labelName='create new blog'>
+      <Togglable labelName='create new blog' ref={blogFormRef}>
         <BlogForm createBlog={handleBlogForm} />
       </Togglable>
     </div>
