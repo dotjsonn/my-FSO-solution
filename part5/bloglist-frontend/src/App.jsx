@@ -5,12 +5,11 @@ import loginService from './services/login'
 
 import Message from './components/Message'
 
+import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
-
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [message, setMessage] = useState(null)
   const [color, setColor] = useState('')
 
@@ -57,20 +56,9 @@ const App = () => {
     setUser(null)
   }
 
-  const handleBlogForm = async (e) => {
-    e.preventDefault()
-
-    const blogObject = {
-      title,
-      author,
-      url
-    }
-
+  const handleBlogForm = async (blogObject) => {
     const blog = await blogService.create(blogObject)
     setBlogs(blogs.concat(blog))
-    setTitle('')
-    setAuthor('')
-    setUrl('')
     setColor('green')
     setMessage(`a new blog ${blog.title} by ${blog.author} added`)
     setTimeout(() => {
@@ -82,63 +70,17 @@ const App = () => {
     <div>
       <h2>log in to application</h2>
       <Message message={message} color={color} />
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>
-            username
-            <input 
-              type="text"
-              value={username}
-              onChange={({target}) => setUsername(target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            password
-            <input 
-              type="password" 
-              value={password}
-              onChange={({target}) => setPassword(target.value)} />
-          </label>
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <LoginForm handleLogin={handleLogin} 
+        username={username} handleUsername={({target}) => setUsername(target.value)} 
+        password={password} handlePassword={({target}) => setPassword(target.value)} 
+      />
     </div>
   )
 
   const blogForm = () => (
     <div>
       <h2>create new</h2>
-      <form onSubmit={handleBlogForm}>
-        <div>
-          <label>
-            title:
-            <input 
-              type="text"
-              value={title}
-              onChange={({target}) => setTitle(target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            author:
-            <input 
-              type="text"
-              value={author}
-              onChange={({target}) => setAuthor(target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            url:
-            <input 
-              type="text"
-              value={url}
-              onChange={({target}) => setUrl(target.value)} />
-          </label>
-        </div>
-        <button type="submit">create</button>
-      </form>
+      <BlogForm createBlog={handleBlogForm} />
     </div>
   )
 
