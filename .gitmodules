@@ -7,3 +7,6 @@
 [submodule "part4/Blog-List"]
 	path = part4/Blog-List
 	url = https://github.com/Shifardd/Blog-List
+[submodule "part5/Blog-List"]
+	path = part5/Blog-List
+	url = https://github.com/Shifardd/Blog-List
