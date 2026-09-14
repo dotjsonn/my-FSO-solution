@@ -1,4 +1,4 @@
-const Message = ({message, color}) => {
+const Message = ({ message, color }) => {
   const styleObject = `message ${color}`
   if (message === null) {
     return null

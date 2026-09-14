@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -39,19 +39,19 @@ const App = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const user = await loginService.login({username, password})
+      const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch {
-      console.log('Wrong credentials');
+      console.log('Wrong credentials')
       setColor('red')
       setMessage('wrong username or password')
       setTimeout(() => {
         setMessage(null)
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -68,7 +68,7 @@ const App = () => {
     setMessage(`a new blog ${blog.title} by ${blog.author} added`)
     setTimeout(() => {
       setMessage(null)
-    }, 5000);
+    }, 5000)
   }
 
   const updateLikes = async (id) => {
@@ -81,7 +81,7 @@ const App = () => {
     setBlogs(blogs.map(blog => blog.id === id ? updatedBlog : blog))
   }
 
-  const removeBlog = async (title, author, id) => {  
+  const removeBlog = async (title, author, id) => {
     if(confirm(`Remove blog ${title} by ${author}`)) {
       await blogService.remove(id)
       setBlogs(blogs.filter(blog => blog.id !== id))
@@ -92,9 +92,9 @@ const App = () => {
     <div>
       <h2>log in to application</h2>
       <Message message={message} color={color} />
-      <LoginForm handleLogin={handleLogin} 
-        username={username} handleUsername={({target}) => setUsername(target.value)} 
-        password={password} handlePassword={({target}) => setPassword(target.value)} 
+      <LoginForm handleLogin={handleLogin}
+        username={username} handleUsername={({ target }) => setUsername(target.value)}
+        password={password} handlePassword={({ target }) => setPassword(target.value)}
       />
     </div>
   )
