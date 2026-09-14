@@ -81,6 +81,13 @@ const App = () => {
     setBlogs(blogs.map(blog => blog.id === id ? updatedBlog : blog))
   }
 
+  const removeBlog = async (title, author, id) => {  
+    if(confirm(`Remove blog ${title} by ${author}`)) {
+      await blogService.remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    }
+  }
+
   const loginForm = () => (
     <div>
       <h2>log in to application</h2>
@@ -105,7 +112,7 @@ const App = () => {
     return (
       <div>
         {sortedBlogs.map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} updateLikes={updateLikes} />
+          <Blog key={blog.id} blog={blog} user={user} updateLikes={updateLikes} removeBlog={removeBlog} />
         )}
       </div>
     )
